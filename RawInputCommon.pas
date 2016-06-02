@@ -11,9 +11,9 @@
 
   Common material and classes
 
-  ©František Milt 2016-05-13
+  ©František Milt 2016-06-02
 
-  Version 0.9
+  Version 0.9.1
 
 ===============================================================================}
 unit RawInputCommon;

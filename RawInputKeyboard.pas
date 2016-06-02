@@ -11,9 +11,9 @@
 
   Keyboard processing
 
-  ©František Milt 2016-05-13
+  ©František Milt 2016-06-02
 
-  Version 0.9
+  Version 0.9.1
 
 ===============================================================================}
 unit RawInputKeyboard;
@@ -75,6 +75,7 @@ type
     procedure DoAfterKeyRelease(Sender: TObject; VirtualKeyCode: USHORT); virtual;
   public
     class Function GetVirtualKeyName(VirtualKeyCode: USHORT; NumberForUnknown: Boolean = True): String; virtual;
+    class Function ShiftStatesToStr(ShiftStates: TKeyboardShiftStates; const Separator: String = ' '; DiscernSides: Boolean = False): String; virtual;
     constructor Create(DeviceInfo: PDeviceListItem = nil);
     destructor Destroy; override;
     procedure Invalidate; override;
@@ -329,7 +330,7 @@ begin
 case VirtualKeyCode of
   VK_NUMLOCK,VK_RCONTROL,VK_RMENU,VK_LWIN,VK_RWIN,VK_INSERT,VK_DELETE,VK_HOME,
   VK_END,VK_PRIOR,VK_NEXT,VK_LEFT,VK_RIGHT,VK_UP,VK_DOWN,VK_DIVIDE,VK_APPS,
-  VK_SNAPSHOT,VK_CLEAR:  Flag_E0 := True;
+  VK_SNAPSHOT,VK_CLEAR,VK_CANCEL:  Flag_E0 := True;
   VK_NUMPADENTER:
     begin
       VirtualKeyCode := VK_RETURN;
@@ -353,6 +354,37 @@ Result := WinCPToUTF8(Result);
 {$IFEND}
 If (Length(Result) <= 0) and NumberForUnknown then
   Result := '0x' + IntToHex(VirtualKeyCode,2);
+end;
+
+//------------------------------------------------------------------------------
+
+class Function TRawInputKeyboard.ShiftStatesToStr(ShiftStates: TKeyboardShiftStates; const Separator: String = ' '; DiscernSides: Boolean = False): String;
+
+  procedure AddShiftStateStr(var Str: String; const ShiftStr: String);
+  begin
+    If Str <> '' then
+      Str := Str + Separator + ShiftStr
+    else
+      Str := Str + ShiftStr;
+  end;
+
+begin
+Result := '';
+If DiscernSides then
+  begin
+    If kssLControl in ShiftStates then AddShiftStateStr(Result,GetVirtualKeyName(VK_LCONTROL));
+    If kssRControl in ShiftStates then AddShiftStateStr(Result,GetVirtualKeyName(VK_RCONTROL));
+    If kssLAlt in ShiftStates then AddShiftStateStr(Result,GetVirtualKeyName(VK_LMENU));
+    If kssRAlt in ShiftStates then AddShiftStateStr(Result,GetVirtualKeyName(VK_RMENU));
+    If kssLShift in ShiftStates then AddShiftStateStr(Result,GetVirtualKeyName(VK_LSHIFT));
+    If kssRShift in ShiftStates then AddShiftStateStr(Result,GetVirtualKeyName(VK_RSHIFT));
+  end
+else
+  begin
+    If kssControl in ShiftStates then AddShiftStateStr(Result,GetVirtualKeyName(VK_CONTROL));
+    If kssAlt in ShiftStates then AddShiftStateStr(Result,GetVirtualKeyName(VK_MENU));
+    If kssShift in ShiftStates then AddShiftStateStr(Result,GetVirtualKeyName(VK_SHIFT));
+  end;
 end;
 
 //------------------------------------------------------------------------------
