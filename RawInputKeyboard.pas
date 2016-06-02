@@ -410,7 +410,7 @@ end;
 
 procedure TRawInputKeyboard.Invalidate;
 begin
-fKeyStates.Clear;
+fKeyStates.Fill(False);
 end;
 
 //------------------------------------------------------------------------------
