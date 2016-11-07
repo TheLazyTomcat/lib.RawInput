@@ -142,7 +142,7 @@ implementation
 
 uses
   SysUtils, StrUtils, DefRegistry
-{$IF Defined(FPC) and not Defined(Unicode)}
+{$IF Defined(FPC) and not Defined(Unicode) and not Defined(BARE_FPC)}
   , LazUTF8
 {$IFEND};
 
@@ -452,9 +452,15 @@ If (BeginPos > 0) and (EndPos > 0) and (BeginPos < EndPos) then
           AdditionalInfo.DeviceClass := Reg.ReadStringDef('Class','');
           AdditionalInfo.ClassGUID := StringToGUID(Reg.ReadStringDef('ClassGUID','{00000000-0000-0000-0000-000000000000}'));
         {$IF Defined(FPC) and not Defined(Unicode)}
+        {$IFDEF BARE_FPC}
+          AdditionalInfo.Description := AnsiToUTF8(AdditionalInfo.Description);
+          AdditionalInfo.Manufacturer := AnsiToUTF8(AdditionalInfo.Manufacturer);
+          AdditionalInfo.DeviceClass := AnsiToUTF8(AdditionalInfo.DeviceClass);
+        {$ELSE}
           AdditionalInfo.Description := WinCPToUTF8(AdditionalInfo.Description);
           AdditionalInfo.Manufacturer := WinCPToUTF8(AdditionalInfo.Manufacturer);
-          AdditionalInfo.DeviceClass := WinCPToUTF8(AdditionalInfo.DeviceClass);          
+          AdditionalInfo.DeviceClass := WinCPToUTF8(AdditionalInfo.DeviceClass);
+        {$ENDIF}
         {$IFEND}          
           Reg.CloseKey;
         end;
@@ -476,7 +482,11 @@ SetLength(DeviceInfo.Name,BufferSize);
 GetRawInputDeviceInfo(DeviceHandle,RIDI_DEVICENAME,PChar(DeviceInfo.Name),@BufferSize);
 SetLength(DeviceInfo.Name,StrLen(PChar(DeviceInfo.Name)));
 {$IF Defined(FPC) and not Defined(Unicode)}
+{$IFDEF BARE_FPC}
+DeviceInfo.Name := AnsiToUTF8(DeviceInfo.Name);
+{$ELSE}
 DeviceInfo.Name := WinCPToUTF8(DeviceInfo.Name);
+{$ENDIF}
 {$IFEND}
 BufferSize := SizeOf(RID_DEVICE_INFO);
 DeviceInfo.Info.cbSize := SizeOf(RID_DEVICE_INFO);

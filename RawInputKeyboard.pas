@@ -181,7 +181,7 @@ implementation
 
 uses
   Windows, SysUtils
-{$IF Defined(FPC) and not Defined(Unicode)}
+{$IF Defined(FPC) and not Defined(Unicode) and not Defined(BARE_FPC)}
   , LazUTF8
 {$IFEND};
 
@@ -350,7 +350,11 @@ If Flag_E0 then ScanCode := ScanCode or $100;
 SetLength(Result,32);
 SetLength(Result,GetKeyNameText(ScanCode shl 16,PChar(Result),Length(Result)));
 {$IF Defined(FPC) and not Defined(Unicode)}
+{$IFDEF BARE_FPC}
+Result := AnsiToUTF8(Result);
+{$ELSE}
 Result := WinCPToUTF8(Result);
+{$ENDIF}
 {$IFEND}
 If (Length(Result) <= 0) and NumberForUnknown then
   Result := '0x' + IntToHex(VirtualKeyCode,2);
