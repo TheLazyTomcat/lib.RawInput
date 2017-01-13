@@ -16,10 +16,14 @@
   Version 0.9.1
 
   Dependencies:
-    WinRawInput   - github.com/ncs-sniper/Lib.WinRawInput
-    BitVector     - github.com/ncs-sniper/Lib.BitVector
-    UtilityWindow - github.com/ncs-sniper/Lib.UtilityWindow
-    DefRegistry   - github.com/ncs-sniper/Lib.DefRegistry
+    AuxTypes       - github.com/ncs-sniper/Lib.AuxTypes
+    BitOps         - github.com/ncs-sniper/Lib.BitOps
+    MulticastEvent - github.com/ncs-sniper/Lib.MulticastEvent
+    WndAlloc       - github.com/ncs-sniper/Lib.WndAlloc
+    WinRawInput    - github.com/ncs-sniper/Lib.WinRawInput
+    BitVector      - github.com/ncs-sniper/Lib.BitVector
+    UtilityWindow  - github.com/ncs-sniper/Lib.UtilityWindow
+    DefRegistry    - github.com/ncs-sniper/Lib.DefRegistry
 
 ===============================================================================}
 unit RawInputManager;
