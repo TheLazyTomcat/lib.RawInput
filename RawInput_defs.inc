@@ -11,5 +11,3 @@
 {$ELSE}
   {$DEFINE 32bit}
 {$IFEND}
-
-{$TYPEINFO ON}

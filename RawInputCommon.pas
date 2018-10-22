@@ -11,9 +11,9 @@
 
   Common material and classes
 
-  ©František Milt 2017-07-18
+  ©František Milt 2018-10-22
 
-  Version 0.9.2
+  Version 0.9.3
 
   Dependencies:
     AuxTypes       - github.com/ncs-sniper/Lib.AuxTypes
@@ -98,7 +98,6 @@ type
     procedure Invalidate; virtual; abstract;
     property UserData: Pointer read fUserData write fUserData;
     property DeviceInfo: TDeviceListItem read fDeviceInfo;
-  published
     property Active: Boolean read fActive write fActive;
     property Index: Integer read fIndex write fIndex;
     property Tag: Integer read fTag write fTag;

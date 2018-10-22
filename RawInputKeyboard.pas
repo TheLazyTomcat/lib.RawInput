@@ -11,9 +11,9 @@
 
   Keyboard processing
 
-  ©František Milt 2017-07-18
+  ©František Milt 2018-10-22
 
-  Version 0.9.2
+  Version 0.9.3
 
   Dependencies:
     AuxTypes       - github.com/ncs-sniper/Lib.AuxTypes
@@ -96,7 +96,6 @@ type
     procedure Invalidate; override;
     Function GetShiftStates: TKeyboardShiftStates; virtual;
     Function GetIndicators: TKeyboardIndicators; virtual;
-  published
     property DoInputCorrection: Boolean read fDoInputCorrection write fDoInputCorrection;
     property DiscernSides: Boolean read fDiscernSides write fDiscernSides;
     property AdditionalVirtualKeys: Boolean read fAdditionalVKeys write fAdditionalVKeys;
@@ -137,7 +136,6 @@ type
     procedure Invalidate; override;
     Function IndexOfDevice(DeviceHandle: THandle): Integer; virtual;    
     property Devices[Index: Integer]: TRawInputKeyboard read GetDevice; default;
-  published
     property DeviceCount: Integer read GetDeviceCount;
     property OnDevicesChange: TNotifyEvent read fOnDevicesChange write fOnDevicesChange;
   end;
@@ -188,7 +186,6 @@ type
     Function AddDevice(DeviceInfo: PDeviceListItem; AssignCallbacks: Boolean = False): Integer; virtual;
     Function RemoveDevice(DeviceHandle: THandle): Integer; virtual;
     procedure DeleteDevice(Index: Integer); virtual;
-  published
     property OnUnknownDeviceIntercepted: TUnknownDeviceEvent read fOnUnknownDeviceIntercepted write fOnUnknownDeviceIntercepted;
   end;
 

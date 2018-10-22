@@ -11,9 +11,9 @@
 
   RawInput manager class
 
-  ©František Milt 2017-07-18
+  ©František Milt 2018-10-22
 
-  Version 0.9.2
+  Version 0.9.3
 
   Dependencies:
     AuxTypes       - github.com/ncs-sniper/Lib.AuxTypes
@@ -115,7 +115,6 @@ type
     procedure UnregisterHIDDevice(Index: Integer); overload; virtual;
     property Devices[Index: Integer]: TDeviceListItem read GetDevice;
     property RegisteredDevices[Index: Integer]: TRawInputDevice read GetRegisteredDevice;
-  published
     property TargetHWND: HWND read fTargetHWND;
     property Active: Boolean read fActive write fActive;
     property Settings: TRawInputManagerSettings read fSettings;
@@ -148,7 +147,6 @@ type
   public
     constructor Create(Settings: TRawInputManagerSettings; UtilityWindow: TUtilityWindow = nil);
     destructor Destroy; override;
-  published
     property UtilityWindow: TUtilityWindow read fUtilityWindow;    
   end;
 
