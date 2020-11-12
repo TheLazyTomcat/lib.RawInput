@@ -560,7 +560,7 @@ repeat
             CurrentBuffer := fRawInputBuffer;
             For i := 1 to Count do
               begin
-              {$IFDEF 32bit}
+              {$IFDEF CPU32bit}
                 If fWoW64Padding then
                   WoW64Conversion(CurrentBuffer);
               {$ENDIF}
